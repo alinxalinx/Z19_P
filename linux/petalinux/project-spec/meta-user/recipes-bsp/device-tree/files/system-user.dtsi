@@ -1,0 +1,47 @@
+/include/ "system-conf.dtsi"
+/ {
+
+};
+
+&fan_gpio {
+	xlnx,dout-default = <0x00000000>;
+};
+
+&i2c1 {
+        clock-frequency = <400000>;
+        eeprom@50{
+                compatible = "atmel,24c04";
+                reg = <0x50>;
+                pagesize = <16>;
+        };
+
+        lm75@48 {
+                compatible = "nxp,lm75";
+                reg = <0x48>;
+        };
+};
+
+&qspi {
+        status = "okay";
+};
+
+&flash0 {
+	is-dual = <0>;
+	num-cs = <1>;
+	spi-rx-bus-width = <4>;
+        spi-tx-bus-width = <4>;
+        compatible ="jedec,spi-nor";
+        reg= <0x0>;
+};
+
+/* SD */
+&sdhci1 {
+	disable-wp;
+	no-1-8-v;
+};
+
+/* USB  */
+&dwc3_0 {
+    status = "okay";
+    dr_mode = "host";
+};
